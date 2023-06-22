@@ -7,7 +7,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { SaveGameCardComponent } from '../components/save-game-card';
+import { SaveGameCardComponent } from '../../components/save-game-card';
 
 @NgModule({
   declarations: [GamePage],

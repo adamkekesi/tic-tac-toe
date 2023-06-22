@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BoardStatus, evaluateBoard } from '../utils';
+import { BoardStatus, evaluateBoard } from '../../utils';
 import { MatDialog } from '@angular/material/dialog';
 import {
   GameOverModalComponent,
   GameOverModalData,
-} from '../components/game-over-modal';
+} from '../../components/game-over-modal';
 import { Subscription } from 'rxjs';
 import {
   FormBuilder,
@@ -12,8 +12,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { BoardService } from '../services';
-import { Board } from '../models';
+import { BoardService } from '../../services';
+import { Board } from '../../models';
 
 enum GameState {
   InProgress,
