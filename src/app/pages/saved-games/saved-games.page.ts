@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription, switchMap } from 'rxjs';
 import { Board } from 'src/app/models';
 import { BoardService } from 'src/app/services';
+import { createBoardEditorForm } from 'src/app/utils';
 
 @Component({
   selector: 'app-saved-games',
@@ -21,6 +22,10 @@ export class SavedGamesPage implements OnInit {
 
   public form!: FormGroup<{ filter: FormControl<string | null> }>;
 
+  public updatedId = -1;
+
+  public updateForm!: FormGroup<{ name: FormControl<string | null> }>;
+
   private sub = new Subscription();
 
   constructor(private boardService: BoardService) {
@@ -28,6 +33,7 @@ export class SavedGamesPage implements OnInit {
     this.form = new FormGroup({
       filter: new FormControl(''),
     });
+    this.updateForm = createBoardEditorForm();
   }
 
   ngOnInit(): void {
@@ -59,7 +65,11 @@ export class SavedGamesPage implements OnInit {
     this.sub.add(s);
   }
 
-  onUpdate(board: Board) {}
+  onUpdate(board: Board) {
+    this.updateForm.reset();
+    this.updateForm.setValue({ name: board.name });
+    this.updatedId = board.id;
+  }
 
   onDelete(board: Board) {
     if (!board) {
@@ -67,6 +77,25 @@ export class SavedGamesPage implements OnInit {
     }
 
     let s = this.boardService.remove(board.id).subscribe(() => this.loadData());
+    this.sub.add(s);
+  }
+
+  saveUpdate() {
+    if (!this.updateForm.valid) {
+      return;
+    }
+
+    let s = this.boardService
+      .update(this.updatedId, {
+        name: this.updateForm.value.name || '',
+        board:
+          this.dataSource.data.find((b) => b.id === this.updatedId)?.board ||
+          '',
+      })
+      .subscribe(() => {
+        this.loadData();
+        this.updatedId = -1;
+      });
     this.sub.add(s);
   }
 }

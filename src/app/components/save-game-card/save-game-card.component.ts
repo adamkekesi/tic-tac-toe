@@ -13,20 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-
-class SaveGameErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { BoardEditorFormComponent } from '../board-editor-form';
 
 @Component({
   selector: 'app-save-game-card',
@@ -39,6 +26,7 @@ class SaveGameErrorStateMatcher implements ErrorStateMatcher {
     MatButtonModule,
     MatCardModule,
     MatInputModule,
+    BoardEditorFormComponent,
   ],
 })
 export class SaveGameCardComponent {
@@ -53,6 +41,4 @@ export class SaveGameCardComponent {
 
   @Input()
   public submitDisabled = false;
-
-  public matcher = new SaveGameErrorStateMatcher();
 }

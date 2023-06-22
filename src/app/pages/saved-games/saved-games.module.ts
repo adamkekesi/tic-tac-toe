@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { BoardEditorFormComponent } from 'src/app/components/board-editor-form';
 
 @NgModule({
   declarations: [SavedGamesPage],
@@ -22,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    BoardEditorFormComponent,
   ],
 })
 export class SavedGamesModule {}

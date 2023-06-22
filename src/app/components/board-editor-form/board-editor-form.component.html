@@ -1,0 +1,32 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      placeholder="My first game"
+      maxlength="50"
+      formControlName="name"
+      [errorStateMatcher]="matcher"
+    />
+    <mat-error
+      *ngIf="
+        form.controls.name.hasError('minlength') &&
+        !form.controls.name.hasError('required')
+      "
+    >
+      Name must be at least 3 characters long
+    </mat-error>
+    <mat-error *ngIf="form.controls.name.hasError('required')">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="submitDisabled || !form.valid"
+    (click)="submit.emit()"
+  >
+    Save
+  </button>
+  <p>{{ error }}</p>
+</form>

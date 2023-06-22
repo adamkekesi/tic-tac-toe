@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BoardStatus, evaluateBoard } from '../../utils';
+import { BoardStatus, createBoardEditorForm, evaluateBoard } from '../../utils';
 import { MatDialog } from '@angular/material/dialog';
 import {
   GameOverModalComponent,
@@ -41,9 +41,7 @@ export class GamePage implements OnInit, OnDestroy {
   private savedBoard?: Board;
 
   constructor(private dialog: MatDialog, private boardService: BoardService) {
-    this.saveGameForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    });
+    this.saveGameForm = createBoardEditorForm();
   }
 
   ngOnInit(): void {

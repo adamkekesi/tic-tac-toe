@@ -11,10 +11,10 @@
 }
 
 mat-card {
-  margin: 40px 3rem 0;
+  margin: 40px 3rem 10px;
 
   @media screen and (max-width: 600px) {
-    margin: 40px 0.5rem 0;
+    margin: 40px 0.5rem 10px;
   }
 }
 
