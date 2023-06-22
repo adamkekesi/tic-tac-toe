@@ -6,6 +6,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { BoardStatus } from 'src/app/utils';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface GameOverModalData {
   result: BoardStatus;
@@ -16,7 +17,7 @@ export interface GameOverModalData {
   templateUrl: './game-over-modal.component.html',
   styleUrls: ['./game-over-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule],
 })
 export class GameOverModalComponent {
   constructor(

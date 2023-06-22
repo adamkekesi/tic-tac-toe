@@ -2,4 +2,10 @@
 <mat-dialog-content>
   <p *ngIf="data.result === 3">Draw</p>
   <p *ngIf="data.result !== 3">Winner: {{ data.result === 1 ? "X" : "O" }}</p>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="false">Close</button>
+    <button mat-button [mat-dialog-close]="true" color="primary">
+      New Game
+    </button>
+  </mat-dialog-actions>
 </mat-dialog-content>
