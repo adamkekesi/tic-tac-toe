@@ -28,11 +28,12 @@
       <button
         mat-raised-button
         color="primary"
-        [disabled]="!form.valid"
+        [disabled]="submitDisabled || !form.valid"
         (click)="submit.emit()"
       >
         Save
       </button>
+      <p>{{ error }}</p>
     </form>
   </mat-card-content>
 </mat-card>

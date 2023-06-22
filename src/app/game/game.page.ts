@@ -12,6 +12,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BoardService } from '../services';
+import { Board } from '../models';
 
 enum GameState {
   InProgress,
@@ -33,9 +35,17 @@ export class GamePage implements OnInit, OnDestroy {
 
   public saveGameForm!: FormGroup<{ name: FormControl<string | null> }>;
 
-  private subscription?: Subscription;
+  public error?: string;
 
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder) {
+  public loading = false;
+
+  public boardEmpty = true;
+
+  private subscriptions: Subscription[] = [];
+
+  private savedBoard?: Board;
+
+  constructor(private dialog: MatDialog, private boardService: BoardService) {
     this.saveGameForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     });
@@ -46,7 +56,9 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   generateBoard(): number[] {
@@ -63,6 +75,7 @@ export class GamePage implements OnInit, OnDestroy {
       return;
     }
 
+    this.boardEmpty = false;
     this.board[i] = this.player;
     this.player = this.player === 1 ? 2 : 1;
 
@@ -79,21 +92,56 @@ export class GamePage implements OnInit, OnDestroy {
       disableClose: true,
     });
 
-    this.subscription = dialogRef
-      .afterClosed()
-      .subscribe((startNewGame: boolean) => {
-        console.log(startNewGame);
-        if (startNewGame) {
-          this.reset();
-        }
-      });
+    let sub = dialogRef.afterClosed().subscribe((startNewGame: boolean) => {
+      if (startNewGame) {
+        this.reset();
+      }
+    });
+
+    this.subscriptions.push(sub);
 
     this.gameState = GameState.Ended;
   }
 
   reset() {
     this.board = this.generateBoard();
+    this.boardEmpty = true;
     this.player = 1;
     this.gameState = GameState.InProgress;
+    this.saveGameForm.reset();
+  }
+
+  saveGame() {
+    this.error = undefined;
+    this.loading = true;
+
+    const observer = {
+      next: (board: Board) => {
+        this.savedBoard = board;
+      },
+      error: (err: any) => {
+        this.error = err?.error?.message || 'Unexpected error';
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    };
+
+    const payload = {
+      name: this.saveGameForm.value.name!,
+      board: this.board.join(''),
+    };
+
+    let sub: Subscription;
+
+    if (this.savedBoard) {
+      sub = this.boardService
+        .update(this.savedBoard.id, payload)
+        .subscribe(observer);
+    } else {
+      sub = this.boardService.create(payload).subscribe(observer);
+    }
+
+    this.subscriptions.push(sub);
   }
 }

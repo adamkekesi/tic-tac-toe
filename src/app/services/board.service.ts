@@ -12,33 +12,23 @@ export class BoardService {
 
   constructor(private http: HttpClient) {}
 
-  create(board: Board): Observable<Board> {
-    return this.http.post<Board>(this.baseUrl, board, {
-      withCredentials: true,
-    });
+  create(board: Omit<Board, 'id'>): Observable<Board> {
+    return this.http.post<Board>(this.baseUrl, board);
   }
 
   findAll(): Observable<Board[]> {
-    return this.http.get<Board[]>(this.baseUrl, {
-      withCredentials: true,
-    });
+    return this.http.get<Board[]>(this.baseUrl);
   }
 
   findOne(id: number): Observable<Board> {
-    return this.http.get<Board>(`${this.baseUrl}/${id}`, {
-      withCredentials: true,
-    });
+    return this.http.get<Board>(`${this.baseUrl}/${id}`);
   }
 
   update(id: number, board: Partial<Board>): Observable<Board> {
-    return this.http.patch<Board>(`${this.baseUrl}/${id}`, board, {
-      withCredentials: true,
-    });
+    return this.http.patch<Board>(`${this.baseUrl}/${id}`, board);
   }
 
   remove(id: number): Observable<Board> {
-    return this.http.delete<Board>(`${this.baseUrl}/${id}`, {
-      withCredentials: true,
-    });
+    return this.http.delete<Board>(`${this.baseUrl}/${id}`);
   }
 }

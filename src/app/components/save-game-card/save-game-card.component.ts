@@ -48,5 +48,11 @@ export class SaveGameCardComponent {
   @Input()
   public form!: FormGroup<{ name: FormControl<string | null> }>;
 
+  @Input()
+  public error?: string;
+
+  @Input()
+  public submitDisabled = false;
+
   public matcher = new SaveGameErrorStateMatcher();
 }

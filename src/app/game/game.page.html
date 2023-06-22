@@ -31,4 +31,9 @@
   </div>
 </div>
 
-<app-save-game-card [form]="saveGameForm"></app-save-game-card>
+<app-save-game-card
+  [submitDisabled]="loading||boardEmpty"
+  [error]="error"
+  [form]="saveGameForm"
+  (submit)="saveGame()"
+></app-save-game-card>
