@@ -6,12 +6,7 @@ import {
   GameOverModalData,
 } from '../../components/game-over-modal';
 import { Subscription } from 'rxjs';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BoardService } from '../../services';
 import { Board } from '../../models';
 

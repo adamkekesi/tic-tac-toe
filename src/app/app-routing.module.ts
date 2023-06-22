@@ -6,6 +6,11 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/game').then((m) => m.GameModule),
   },
+  {
+    path: 'saved-games',
+    loadChildren: () =>
+      import('./pages/saved-games').then((m) => m.SavedGamesModule),
+  },
 ];
 
 @NgModule({

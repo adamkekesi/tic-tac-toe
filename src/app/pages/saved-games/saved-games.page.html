@@ -1,0 +1,65 @@
+<p *ngIf="loading">Loading...</p>
+<div *ngIf="error">
+  <p>{{error}}</p>
+  <button mat-raised-button color="primary" (click)="retryLoading()">
+    Retry
+  </button>
+</div>
+
+<mat-card appearance="raised">
+  <mat-card-header
+    ><mat-card-title>Save your game</mat-card-title></mat-card-header
+  >
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput maxlength="50" formControlName="filter" />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="loadData(form.controls.filter.value || '')"
+      >
+        Filter
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell class="dc-label" *matHeaderCellDef>Id</th>
+    <td mat-cell class="dc-content" *matCellDef="let element">
+      {{ element.id }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell class="dc-label" *matHeaderCellDef>Name</th>
+    <td mat-cell class="dc-content" *matCellDef="let element">
+      {{ element.name }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let row" class="action-cell">
+      <div class="action-container">
+        <button mat-icon-button (click)="onUpdate(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDelete(row)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
+  <ng-container *ngIf="!loading">
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      class="customer-row"
+    ></tr>
+  </ng-container>
+</table>

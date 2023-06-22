@@ -16,12 +16,10 @@ export class BoardService {
     return this.http.post<Board>(this.baseUrl, board);
   }
 
-  findAll(): Observable<Board[]> {
-    return this.http.get<Board[]>(this.baseUrl);
-  }
-
-  findOne(id: number): Observable<Board> {
-    return this.http.get<Board>(`${this.baseUrl}/${id}`);
+  findAll(filter?: string): Observable<Board[]> {
+    return this.http.get<Board[]>(this.baseUrl, {
+      params: { name: filter || '' },
+    });
   }
 
   update(id: number, board: Partial<Board>): Observable<Board> {
