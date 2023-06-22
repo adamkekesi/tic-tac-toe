@@ -47,7 +47,11 @@ export class GamePage implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.saveGameForm = createBoardEditorForm();
-    route.queryParams.subscribe((params) => {
+  }
+
+  ngOnInit(): void {
+    this.board = this.generateBoard();
+    this.route.queryParams.subscribe((params) => {
       const id = params['id'];
       this.boardService.findAll().subscribe((boards) => {
         const board = boards.find((b) => b.id === +id);
@@ -59,10 +63,6 @@ export class GamePage implements OnInit, OnDestroy {
         }
       });
     });
-  }
-
-  ngOnInit(): void {
-    this.board = this.generateBoard();
   }
 
   ngOnDestroy(): void {
