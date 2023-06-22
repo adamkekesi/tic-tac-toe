@@ -9,6 +9,8 @@ export class GamePage implements OnInit {
 
   public board: number[] = [];
 
+  public player = 1;
+
   ngOnInit(): void {
     this.board = this.generateBoard();
   }
@@ -20,5 +22,14 @@ export class GamePage implements OnInit {
     }
 
     return board;
+  }
+
+  play(i: number) {
+    if (this.board[i] !== 0) {
+      return;
+    }
+
+    this.board[i] = this.player;
+    this.player = this.player === 1 ? 2 : 1;
   }
 }
