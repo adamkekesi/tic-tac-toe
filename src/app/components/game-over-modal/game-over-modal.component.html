@@ -1,0 +1,5 @@
+<h2 mat-dialog-title>Game Over!</h2>
+<mat-dialog-content>
+  <p *ngIf="data.result === 3">Draw</p>
+  <p *ngIf="data.result !== 3">Winner: {{ data.result === 1 ? "X" : "O" }}</p>
+</mat-dialog-content>

@@ -69,6 +69,17 @@ describe('evaluateBoard', function () {
 
     checkBoards(boards);
   });
+
+  it('should check for draws', function () {
+    const boards = [
+      {
+        board: [1, 2, 1, 2, 1, 2, 2, 1, 2],
+        result: BoardStatus.Draw,
+      },
+    ];
+
+    checkBoards(boards);
+  });
 });
 
 function checkBoards(boards: BoardTestData[]) {

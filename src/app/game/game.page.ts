@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardStatus, evaluateBoard } from '../utils';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  GameOverModalComponent,
+  GameOverModalData,
+} from '../components/game-over-modal';
 
 @Component({
   templateUrl: './game.page.html',
@@ -10,6 +16,8 @@ export class GamePage implements OnInit {
   public board: number[] = [];
 
   public player = 1;
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.board = this.generateBoard();
@@ -31,5 +39,13 @@ export class GamePage implements OnInit {
 
     this.board[i] = this.player;
     this.player = this.player === 1 ? 2 : 1;
+
+    const result = evaluateBoard(this.board);
+    if (result !== BoardStatus.InProgress) {
+      this.dialog.open(GameOverModalComponent, {
+        data: { result } as GameOverModalData,
+        disableClose: true,
+      });
+    }
   }
 }
