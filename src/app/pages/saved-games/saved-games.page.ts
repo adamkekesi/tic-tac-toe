@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { Board } from 'src/app/models';
 import { BoardService } from 'src/app/services';
@@ -28,7 +29,7 @@ export class SavedGamesPage implements OnInit {
 
   private sub = new Subscription();
 
-  constructor(private boardService: BoardService) {
+  constructor(private boardService: BoardService, private router: Router) {
     this.dataSource = new MatTableDataSource([] as Board[]);
     this.form = new FormGroup({
       filter: new FormControl(''),
@@ -97,5 +98,9 @@ export class SavedGamesPage implements OnInit {
         this.updatedId = -1;
       });
     this.sub.add(s);
+  }
+
+  open(board: Board) {
+    this.router.navigate(['/'], { queryParams: { id: board.id } });
   }
 }

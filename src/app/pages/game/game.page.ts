@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BoardService } from '../../services';
 import { Board } from '../../models';
+import { ActivatedRoute } from '@angular/router';
 
 enum GameState {
   InProgress,
@@ -40,8 +41,24 @@ export class GamePage implements OnInit, OnDestroy {
 
   private savedBoard?: Board;
 
-  constructor(private dialog: MatDialog, private boardService: BoardService) {
+  constructor(
+    private dialog: MatDialog,
+    private boardService: BoardService,
+    private route: ActivatedRoute
+  ) {
     this.saveGameForm = createBoardEditorForm();
+    route.queryParams.subscribe((params) => {
+      const id = params['id'];
+      this.boardService.findAll().subscribe((boards) => {
+        const board = boards.find((b) => b.id === +id);
+        if (board) {
+          this.board = board.board.split('').map((c) => parseInt(c));
+          this.boardEmpty = false;
+          this.savedBoard = board;
+          this.saveGameForm.setValue({ name: board.name });
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
