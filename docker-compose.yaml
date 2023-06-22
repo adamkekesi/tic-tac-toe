@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  tic-tac-toe-backend:
+    image: precognoxkft/tic-tac-toe-backend:1.0.0
+    container_name: tic-tac-toe-backend
+    ports:
+      - 5000:5000
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=nestjs
+      - PORT=5000
+    networks:
+      - tic-tac-toe-network
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/data/postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=nestjs
+    networks:
+      - tic-tac-toe-network
+networks:
+  tic-tac-toe-network:
+    driver: bridge
