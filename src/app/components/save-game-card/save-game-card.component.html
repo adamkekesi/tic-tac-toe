@@ -1,0 +1,38 @@
+<mat-card appearance="raised">
+  <mat-card-header
+    ><mat-card-title>Save your game</mat-card-title></mat-card-header
+  >
+  <mat-card-content>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          placeholder="My first game"
+          maxlength="50"
+          formControlName="name"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error
+          *ngIf="
+            form.controls.name.hasError('minlength') &&
+            !form.controls.name.hasError('required')
+          "
+        >
+          Name must be at least 3 characters long
+        </mat-error>
+        <mat-error *ngIf="form.controls.name.hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!form.valid"
+        (click)="submit.emit()"
+      >
+        Save
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

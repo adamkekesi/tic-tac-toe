@@ -6,6 +6,12 @@ import {
   GameOverModalData,
 } from '../components/game-over-modal';
 import { Subscription } from 'rxjs';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 enum GameState {
   InProgress,
@@ -25,9 +31,15 @@ export class GamePage implements OnInit, OnDestroy {
 
   public gameState = GameState.InProgress;
 
+  public saveGameForm!: FormGroup<{ name: FormControl<string | null> }>;
+
   private subscription?: Subscription;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder) {
+    this.saveGameForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    });
+  }
 
   ngOnInit(): void {
     this.board = this.generateBoard();

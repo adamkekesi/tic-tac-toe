@@ -1,0 +1,26 @@
+mat-card {
+  margin: 40px 3rem 0;
+
+  @media screen and (max-width: 600px) {
+    margin: 40px 0.5rem 0;
+  }
+}
+
+mat-card-content {
+  padding-top: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  mat-form-field {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  button {
+    margin-left: 16px;
+  }
+}
