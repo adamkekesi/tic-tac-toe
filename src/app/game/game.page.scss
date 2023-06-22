@@ -1,0 +1,20 @@
+.grid-container {
+  display: grid;
+  gap: 2px;
+  max-width: 300px;
+  margin: 0 auto;
+  background-color: black;
+  padding: 2px;
+}
+
+.grid-item {
+  background-color: #f0f0f0;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+}
